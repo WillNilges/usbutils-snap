@@ -1,0 +1,4 @@
+#!/bin/sh -e
+
+snap connect usbutils:network-control :network-control
+snap connect usbutils:raw-usb :raw-usb
