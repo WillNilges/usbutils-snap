@@ -1,5 +1,5 @@
 name: usbutils
-version: None
+version: 012
 summary: USB utilities for Linux, including lsusb
 description: |
   USB utilities for Linux, including lsusb. Make sure you connect the
@@ -29,9 +29,14 @@ apps:
 parts:
   usbutils:
     source: https://github.com/gregkh/usbutils.git
+    organize:
+      usr/bin: bin
     plugin: autotools
     build-packages: [libudev-dev, libusb-1.0-0-dev, pkg-config]
-    prepare: |
+    override-build: |
       git submodule init
       git submodule update
-
+      autoreconf --install --symlink
+      ./configure
+      make
+      DESTDIR=$SNAPCRAFT_PART_INSTALL make install
